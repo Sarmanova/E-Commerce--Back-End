@@ -16,7 +16,7 @@ const categoryData = [{
         category_name: "Shoes",
     },
 ];
-
+console.log("HELLO FROM CATEGORY SEEDS!!!!!!!");
 const seedCategories = () => Category.bulkCreate(categoryData);
 
 module.exports = seedCategories;
