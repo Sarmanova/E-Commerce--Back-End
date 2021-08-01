@@ -11,11 +11,11 @@ router.get("/", async(req, res) => {
         const productData = await Product.findAll({
             include: [{
                     model: Category,
-                    attributes: ["category_name"],
+
                 },
                 {
                     model: Tag,
-                    attributes: ["tag_name"],
+
                 },
             ],
         });
@@ -25,20 +25,18 @@ router.get("/", async(req, res) => {
     }
 });
 // get one product
-// router.get("/:id", (req, res) => {
-//     // find a single product by its `id`
-//     // be sure to include its associated Category and Tag data
-// });
+// find a single product by its `id`
+// be sure to include its associated Category and Tag data
 router.get("/:id", async(req, res) => {
     try {
-        const productData = await Product.findOne(req.params.id, {
+        const productData = await Product.findByPk(req.params.id, {
             include: [{
                     model: Category,
-                    attributes: ["category_name"],
+
                 },
                 {
                     model: Tag,
-                    attributes: ["tag_name"],
+
                 },
             ],
         });
@@ -50,7 +48,7 @@ router.get("/:id", async(req, res) => {
 });
 
 // create new product
-router.post("/", (req, res) => {
+router.post("/", async(req, res) => {
     try {
         const product = await Product.create(req.body);
         res.status(200).json(product);

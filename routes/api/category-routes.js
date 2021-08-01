@@ -5,10 +5,16 @@ const { Category, Product } = require("../../models");
 
 router.get("/", async(req, res) => {
     try {
-        const categoryData = await Category.findAll();
-        res.status(200).json(categoryData);
+        const category = await Category.findAll(req.params.id, {
+            where: { id: req.params.id },
+            include: [{
+                model: Product,
+            }, ],
+        });
+        res.status(200).json(category);
     } catch (err) {
         res.status(500).json(err);
+        console.log(err);
     }
 });
 
@@ -16,14 +22,18 @@ router.get("/", async(req, res) => {
 // be sure to include its associated Products
 router.get("/:id", async(req, res) => {
     try {
-        const category = await Category.findOne(req.params.id, {
+        const category = await Category.findByPk(req.params.id, {
             where: { id: req.params.id },
-            include: [{ model: Product }],
+            include: [{
+                model: Product,
+
+            }, ],
         });
 
         res.status(200).json(category);
     } catch (err) {
         res.status(500).json(err);
+        console.log(err);
     }
 });
 
@@ -34,10 +44,11 @@ router.post("/", async(req, res) => {
         res.status(200).json(category);
     } catch (err) {
         res.status(400).json(err);
+        console.log(err);
     }
 });
 // update a category by its `id` value
-router.post("/", async(req, res) => {
+router.put("/", async(req, res) => {
     try {
         const category = await Category.update(req.params.id, {
             where: { id: req.params.id },
@@ -47,6 +58,7 @@ router.post("/", async(req, res) => {
         res.status(200).json(category);
     } catch (err) {
         res.status(500).json(err);
+        console.log(err);
     }
 });
 
@@ -54,12 +66,13 @@ router.post("/", async(req, res) => {
 
 router.delete("/:id", async(req, res) => {
     try {
-        const categoryData = await Category.destroy({
+        const category = await Category.destroy({
             where: { id: req.params.id },
         });
-        res.status(200).json(categoryData);
+        res.status(200).json(category);
     } catch (err) {
         res.status(500).json(err);
+        console.log(err);
     }
 });
 module.exports = router;

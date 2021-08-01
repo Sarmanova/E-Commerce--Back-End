@@ -3,21 +3,20 @@ const { Tag, Product, ProductTag } = require("../../models");
 
 // The `/api/tags` endpoint
 
-// router.get("/", (req, res) => {
-//     // find all tags
-//     // be sure to include its associated Product data
-// });
+// find all tags  
+// be sure to include its associated Product data
 router.get("/", async(req, res) => {
     try {
         const tagData = await Tag.findAll(req.params.id, {
             where: { id: req.params.id },
             include: [{
                 model: Product,
-            }],
+            }, ],
         });
         res.status(200).json(tagData);
     } catch (err) {
         res.status(500).json(err);
+        console.log(err)
     }
 });
 // router.get("/:id", (req, res) => {
@@ -26,16 +25,17 @@ router.get("/", async(req, res) => {
 // });
 router.get("/:id", async(req, res) => {
     try {
-        const tagData = await Tag.findOne(req.params.id, {
+        const tagData = await Tag.findByPk(req.params.id, {
             where: { id: req.params.id },
             include: [{
                 model: Product,
-            }],
+            }, ],
         });
 
         res.status(200).json(tagData);
     } catch (err) {
         res.status(500).json(err);
+        console.log(err);
     }
 });
 
@@ -46,19 +46,21 @@ router.post("/", async(req, res) => {
         res.status(200).json(tagData);
     } catch (err) {
         res.status(400).json(err);
+        console.log(err);
     }
 });
 
 // update a tag's name by its `id` value
 router.put("/", async(req, res) => {
     try {
-        const tag = await Tag.update(req.params.id, {
+        const tagData = await Tag.update(req.params.id, {
             where: { id: req.params.id },
         });
 
-        res.status(200).json(tag);
+        res.status(200).json(tagData);
     } catch (err) {
         res.status(500).json(err);
+        console.log(err);
     }
 });
 // delete on tag by its `id` value
@@ -73,6 +75,7 @@ router.delete("/:id", async(req, res) => {
         res.status(200).json(tagData);
     } catch (err) {
         res.status(500).json(err);
+        console.log(err);
     }
 });
 
