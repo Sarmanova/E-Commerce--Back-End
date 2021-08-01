@@ -1,5 +1,7 @@
 # E-Commerce--Back-End
 
+## Description
+An e-commerce backend  connected with database via api calls to Create, Update, Find, Find All, and Delete various types of categories, products, and tags
 ## Acceptance Criteria
 
 ```md
